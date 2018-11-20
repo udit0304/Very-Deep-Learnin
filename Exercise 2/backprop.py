@@ -36,7 +36,7 @@ for t in range(500):
     grad_h_relu = grad_y_pred.mm(w2.t())
     grad_h = grad_h_relu.clone()
     grad_h[h < 0] = 0
-    grad_w1 = (grad_y_pred.mm(w2.t())).mm(x.t())
+    grad_w1 = (x.t()).mm(grad_y_pred.mm(w2.t()))
 
     # Update weights using gradient descent
     w1 -= learning_rate * grad_w1

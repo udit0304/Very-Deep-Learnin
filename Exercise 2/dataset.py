@@ -3,6 +3,14 @@ import torchvision
 import sys
 from transform import transform_training, transform_testing
 import config as cf
+#changes start here
+
+from util import *
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing.label import LabelEncoder
+
+#changes end here
 
 def dataset(dataset_name):
 
@@ -43,9 +51,23 @@ def dataset(dataset_name):
         testset = torchvision.datasets.STL10(root='./data',  split='test', download=False, transform=transform_testing())
         outputs = 10
         inputs = 3
+        
+    elif (dataset_name == 'dog-breed'):
+        print("| Preparing DOG-BREED dataset...")
+        
+        data_train_csv = pd.read_csv('./data/dog-breed/labels.csv')
+        filenames = data_train_csv.id.values
+        le = LabelEncoder()
+        labels = le.fit_transform(data_train_csv.breed)
+
+        filenames_train , filenames_val ,labels_train, labels_val =train_test_split(filenames,labels,test_size=0.3,stratify=labels,shuffle=True)
+        trainset = get_train_dataset(filenames_train,labels_train,cf.batch_size,rootdir='./data/dog-breed/train')
+        testset = get_train_dataset(filenames_val,labels_val,cf.batch_size,rootdir='./data/dog-breed/train')
+        outputs = 120
+        inputs = 3
     
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=cf.batch_size, shuffle=True, num_workers=4)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=cf.batch_size, shuffle=False, num_workers=4)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=cf.batch_size, shuffle=True, num_workers=4)
     
     return trainloader, testloader, outputs, inputs
 

@@ -28,7 +28,7 @@ class AlexNet(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),
         )
-        self.classifier = nn.Linear(256, num_classes)
+        self.classifier = nn.Linear(256*7*7, num_classes)
 
     def forward(self, x):
         x = self.features(x)

@@ -1,0 +1,20 @@
+Model is overfitting when training accuracy is much higher than validation accuracy. Some of the techniques to overcome overfitting are:
+1. Regularization.
+2. Batch Normalization.
+3. Dropout
+4. Transfer Learning.
+
+In our case, adding more convolutional layers to model have to not caused over fitting. However, transfer learning resulted in much better accuracy:
+
+1. Results of Transfer Learning (for 50 epochs):
+
+
+
+Training Acc@1: 90.000%
+
+Validation Acc@1:84.00%
+
+2. Results of Normal Approach(for 150 epochs):
+
+Training  Acc@1 = 80.00%
+Validation Acc@1: 74.000%

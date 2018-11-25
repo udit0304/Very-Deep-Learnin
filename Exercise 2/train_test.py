@@ -15,10 +15,12 @@ def train(epoch, net, trainloader, criterion):
     correct = 0
     total = 0
     optimizer = optim.Adam(net.parameters(), lr=cf.lr, weight_decay=5e-4)
+    #optimizer = optim.SGD(net.parameters(), lr = cf.lr, momentum=0.9)
     train_loss_stacked = np.array([0])
 
     print('\n=> Training Epoch #%d, LR=%.4f' %(epoch, cf.lr))
     for batch_idx, (inputs_value, targets) in enumerate(trainloader):
+        #print(inputs_value.shape)
         if use_cuda:
             inputs_value, targets = inputs_value.cuda(), targets.cuda() # GPU settings
         optimizer.zero_grad()
@@ -69,6 +71,8 @@ def test(epoch, net, testloader, criterion):
 
     if acc > best_acc:
         best_acc = acc
+        #net.save_state_dict('AlexNetTraining.pt')
+        torch.save(net.state_dict(), 'AlexNetTraining-Augementation.pt')
     print('* Test results : Acc@1 = %.2f%%' % (best_acc))
 
     return test_loss_stacked

@@ -1,0 +1,7 @@
+While training Alexnet from scratch, we got following results (after 150 epochs):
+
+
+Training  Acc@1 = 80.00%
+Validation Acc@1: 74.000%
+
+However, we were not able to convert test results into Kaggle format, that's why results are not uploaded to Kaggle website.

@@ -4,6 +4,9 @@ from PIL import Image
 from torchvision import transforms
 from torch.autograd import Variable
 import torch
+from transform import transform_training
+from autoaugment import DogBreedPolicy
+
 
 class DogDataset(Dataset):
     """Dog Breed Dataset"""
@@ -19,6 +22,8 @@ class DogDataset(Dataset):
         return len(self.filenames)
 
     def __getitem__(self, item):
+
+            
         label = self.labels[item]
         img_name = os.path.join(self.root_dir,self.filenames[item]+'.jpg')
 
@@ -34,8 +39,9 @@ class DogDataset(Dataset):
             return img,self.labels[item]
 
 def get_train_dataset(filenames,labels,batch_size,rootdir='./data/dog-breed/train'):
+    policy = DogBreedPolicy()
     composed = transforms.Compose([transforms.RandomResizedCrop(227, scale=(0.75, 1)),
-                                   transforms.RandomHorizontalFlip(),
+                                  
                                    transforms.ToTensor(),
                                    transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                         std=[0.229, 0.224, 0.225])

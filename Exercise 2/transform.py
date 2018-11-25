@@ -1,14 +1,15 @@
 import torchvision.transforms as transforms
 
 import config as cf
+from autoaugment import DogBreedPolicy
 
 def transform_training():
 
     transform_train = transforms.Compose([
-        transforms.Resize((cf.resize, cf.resize)),
-        transforms.RandomCrop(32, padding=4),
+        transforms.Resize(227),
+        #transforms.RandomCrop(32, padding=4),
         # transforms.RandomHorizontalFlip(),
-        # CIFAR10Policy(),
+        #DogBreedPolicy(),
         transforms.ToTensor(),
     ])  # meanstd transformation
 
@@ -17,8 +18,8 @@ def transform_training():
 def transform_testing():
 
     transform_test = transforms.Compose([
-        transforms.Resize((cf.resize, cf.resize)),
-        transforms.RandomCrop(32, padding=4),
+        transforms.Resize(227,227),
+        #transforms.RandomCrop(32, padding=4),
         # transforms.RandomHorizontalFlip(),
         # CIFAR10Policy(),
         transforms.ToTensor(),
